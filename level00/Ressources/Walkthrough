@@ -1,0 +1,6 @@
+
+Hello,
+
+It just compares the entry we give to scanf 
+
+If the entred number match with 0x149c (5276), then it opens /bin/sh
