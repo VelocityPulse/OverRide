@@ -1,0 +1,17 @@
+
+
+There's two fgets, the first fill 256 char in a global variable, 
+and the second fill 100 char in a stack, it allows us to write on EIP
+
+We are now allowed to put a shellcode on the stack and run it by re-writing saved EIP
+
+After have re-write saved EIP, we will jump on our shellcode at the end of the program
+
+Depending of our shellcode, we will make it :
+
+push &binsh_var
+push &exit
+push &system
+ret
+
+
