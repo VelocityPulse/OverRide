@@ -1,0 +1,35 @@
+As we can see, the program is an authanticate one
+
+When we read the assembly code we can see that the program read the next pass,
+Then ask us a username and a password.
+If we type the right password, the program start a binsh
+Otherwise, it makes a `printf(username)` 
+
+The breach is that we have the hand to send anything we want to printf.
+
+Something else that we can see, is that the second param of printf prints is the
+last value we set to rsi. Which was the string chain containing the password WE typed.
+
+And this string chain is situed on the stack, BEFORE the begining of the true password 
+of the next level.
+
+We could say, let's put enough %x in the format until to reach the true password value,
+but we would have to reach at least 100 bytes + 40 bytes of the true password,
+which is not enough with the 100 bytes they gives us for the username.
+
+The solution is to tell printf to directly print his n parameter with the following
+format : 
+
+%n$llx
+
+Where n is the number of the format.
+For the 20th value : #20$llx
+
+By using this concept, we can read any part of the stack, and the password sector.
+
+it results : 
+756e505234376848 45414a3561733951 377a7143574e6758 354a35686e475873 48336750664b394d
+
+The last step is to reverse these long long hex value, and print them in ascii
+We can use [::-1] in python, to do it.
+
