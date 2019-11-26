@@ -1,0 +1,38 @@
+In this level, we can see several functions
+
+In main, we can see that a value is get by a scanf, and that it's sent to test()
+with another static value which is : 0x1337d00d
+
+in test(); We can see that 0x1337d00d is substracted by the value we entered.
+If the result is superior to 0x15, it will jump on a decrypt() with a rand() passed
+in parameter.
+
+What we want is to pass our number to decrypt.
+In decrypt we can see that there's a xor with our dumber, executed on each character of 
+a static string : Q}|u`sfg~sf{}|a3
+
+To find the good xor, we can go on dcode : https://www.dcode.fr/chiffre-xor
+and ask it to try all the possible xor.
+
+We can see in the results that there's a "Congratulations!" result for the xor 0x12
+It's a good new because we can see later in decrypt() that if the result of the xor while
+equals the string "Congratulations!" it opens a /bin/sh
+
+0x12 is less than 0x15. We can send it to decrypt then.
+
+The procedure will be : 
+- To pass the first param of test() 0x1337d00d - 0x12
+- So we have to pass 0x1337CFFB (322424827)
+
+- Then 0x1337CFFB will be passed to test
+- test will do :  0x1337d00d - 0x1337CFFB
+-> 0x12
+
+- Then 0x12 will be sent to decrypt();
+- Decrypt will xor all the string by 0x12 and it will result the string "Congratulations!"
+
+
+A /bin/sh is opened by the this result.
+
+
+
