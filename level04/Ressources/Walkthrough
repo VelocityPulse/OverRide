@@ -1,0 +1,21 @@
+In this level we can see a basic fork where the child will do a gets();
+
+While the child is waiting for the gets, we can see that the parent is waiting the child.
+The parent is checking if the child doesnt execute a execv();
+Hovewer.. Calling system use a fork before calling execv, so it still allows us to try
+to use a system() in the child and execute a /bin/sh.
+
+This exercise is a basinc gets injection, the difficulty is to redirect our injection in the 
+child stdin and not the parent.
+
+To do that, we have to use substitution process.
+
+We will write a basic script.py with his usual : 
+- RetToLibC
+- Padding
+- New address of saved EIP
+- Print.
+
+The (double) substitution process looks like it :
+
+(python scrypt.py; cat)> >(./level04)
