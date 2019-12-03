@@ -1,0 +1,13 @@
+On this level we can see that see that login and password are required.
+Note : The password should be a number reguarding his scanf conversion "%u"
+
+They are sent to the function auth() which will make a lot of algorithm conversion on the login
+string
+
+If the result of the convertion is equal to the password, then it opens us a shell.
+
+The solution is simply to pass a random login, check what algorithm returns like number
+And retry with the same login and the number the algorithm returned.
+
+To note : To do this operation, we have to pass the ptrace security by a manual jump
+using GDB.
