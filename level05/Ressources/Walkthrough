@@ -1,0 +1,6 @@
+fgets is called for a 100 bytes buffer in which every character is lowercased if possible
+
+This buffer is then used as a parameter for printf, which allows us to do a format string attack
+to write on the got, specificly exit()'s got jump
+Instead of jumping on the actuall exit function, we are going to jump on our buffer
+in which we put some opcodes to call system with "/bin/sh" as a parameter
