@@ -1,0 +1,30 @@
+in this level, we can see that it's a program which have several commands
+
+-store
+-read
+-quit
+
+The simple purpose of this program is to store a value at an index.
+It handles a 400bytes tab, and it store value at the given index<<2
+
+We should send a shellcode or write a ret2libC, unfortunately, there's
+a security in store_number. It allows us to write only to :
+index % 3 != 0
+
+saved EIP are 456 bytes later the tab.
+456 << 2 = 114
+
+Unfortunately 144 % 3 == 0 so we can't overwrite the saved EIP
+
+The solution to counter this security is to add high bit to our number 
+
+114 : 0000 0000 0000 0000 0000 0000 0111 0010
+->    1000 0000 0000 0000 0000 0000 0111 0010
+
+which gives : 2147483762
+And this number % 3 isn't == 0
+
+By this way we can write to saved EIP with 2147483762 (114)
+and write the parameter to our ret2libC at 116
+
+
