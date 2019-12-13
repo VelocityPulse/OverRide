@@ -8,7 +8,7 @@ unreference it like if it was a structure.
 It's important because we will have to modify the int of this structure
 
 When we see the first function called, set_username(), we can see that even if the tab is
-supposed to stop at 32, the function gets 41 chars, and can copy until 41 chars to the tab
+supposed to stop at 40, the function gets 41 chars, and can copy until 41 chars to the tab
 
 Hopefully at the tab+41, we can find the place where the int variable of the struct is stored.
 

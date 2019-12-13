@@ -5,7 +5,7 @@
 
 struct data {
 	char message[140];
-	char user[32];
+	char user[40];
 	int value;
 
 } typedef s_data;
@@ -20,7 +20,7 @@ void secret_backdoor()
 
 void set_msg(s_data *a)
 {
-	char buff[1024]; //		rbp - 0x400
+	char buff[1024]; //			rbp - 0x400
 	s_data *param = a; //		rbp - 0x408
 
 	memset(buff, 0, 1024);
@@ -54,11 +54,6 @@ void set_username(s_data *a)
 
 void handle_msg()
 {
-/*
-	int a = 0x8c; //					rbp - 0xc
-	char tab[32] = {0}; //				rbp - 0xc0 + 0x8c (rbp-0x34)
-	char b[140]; //						rbp - 0xc0
-*/
 	s_data a;
 	memset(a.user, 0, 32);
 	a.value = 0x8c;
