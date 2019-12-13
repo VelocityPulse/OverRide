@@ -1,0 +1,40 @@
+In this level, if we read the stack of handle_msg, we can see that there's
+two tabs, one initialized to zero, and the other not initialized.
+And an int, which contain a value initialized to 0x8c
+
+When we read set_username, and set_msg, it's only a pointer which is given, and they
+unreference it like if it was a structure.
+
+It's important because we will have to modify the int of this structure
+
+When we see the first function called, set_username(), we can see that even if the tab is
+supposed to stop at 32, the function gets 41 chars, and can copy until 41 chars to the tab
+
+Hopefully at the tab+41, we can find the place where the int variable of the struct is stored.
+
+This int is used later in set_msg as a maximum len.
+By overriding this value from 0x8c to 0xff, set_msg will write more in the tab that
+it is supposed to do.
+
+And we will be able to write until RIP
+
+- The first padding looks like it : 
+"A" * 40 + "\xff" + ("B" * 87)
+
+The 87 B are there to exactly write 128 chars and fill the enteer buffer of the fgets()
+
+- The second padding looks like it :
+"C" * 199 + "\x00\x00\x55\x55\x55\x55\x48\x8c"[::-1]
+
+199 is the space between the begining of the tab and RIP
+
+- The third padding is to fill the rest of the set_msg fgets()
+
+"D" * (1022 - len(second_pad))
+
+- The fourth entry is the command to give to the fgets of the secret_backdoor
+
+"cat /home/user/end/.pass"
+
+
+
