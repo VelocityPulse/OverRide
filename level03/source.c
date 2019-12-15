@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <string.h>
+#include <stdlib.h>
 
 void			clear_stdin() // note : this is called by get_unum which is never used
 {
@@ -57,7 +59,7 @@ void			test(int a, int b)
 
 	c = b - a;
 	
-	switch(c)
+	switch (c)
 	{
 		case 1:
 			decrypt(c); break;

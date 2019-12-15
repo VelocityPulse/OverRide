@@ -3,16 +3,13 @@
 #include <string.h>
 #include <sys/ptrace.h>
 
-
 int auth(char *login, unsigned int u)
 {
-
 	int len; //	ebp - 0xc
 	int b; //	ebp - 0x10
 	int c; //	ebp - 0x14
 
 	login[strcspn(login, "\n")] = 0;
-
 	len = strnlen(login, 32);
 
 	if (len <= 5)
@@ -32,15 +29,14 @@ int auth(char *login, unsigned int u)
 	{
 		if (login[c] <= 0x1f)
 			return (1);
-
 		// not sure :
-		b += (login[c] ^ b) - (((((login[c] ^ b) - ((login[c] ^ b) * 0x88233b2b)) >> 1) + 1) >> 10) * 0x539;
-
+		b += (login[c] ^ b) - (((((login[c] ^ b) - 
+			((login[c] ^ b) * 0x88233b2b)) >> 1) + 1) >> 10) * 0x539;
 		// b += eax
 		++c;
 	}
 
-	if (len != u)
+	if (u != b)
 		return (1);
 	return (0);
 }
