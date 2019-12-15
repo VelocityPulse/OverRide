@@ -26,49 +26,47 @@ int main(int argc, char **argv)
 	char **av = argv; //	rbp - 0xa0
 	int ac = argc; //		rbp - 0x94
 
-	FILE *log; //			rbp - 0x88
-	FILE *param; //			rbp - 0x80
+	FILE *file_fd_log; //			rbp - 0x88
+	FILE *file_fd_src; //			rbp - 0x80
 
-	int fd = 0xffffffff; //	rbp - 0x78
-	unsigned char b = 0xff; //		rbp - 0x71
-	char a[112]; //				rbp - 0x70
+	int fd_backup = 0xffffffff; //	rbp - 0x78
+	unsigned char fd_dest = 0xff; //		rbp - 0x71
+	char backup_name[112]; //				rbp - 0x70
 
 	if (ac != 2) {
 		printf("Usage: %s filename\n", *argv);
 	}
-	log = fopen("./backups/.log", "w");
-	if (log == 0) {
+	file_fd_log = fopen("./backups/.log", "w");
+	if (file_fd_log == 0) {
 		printf("ERROR: Failed to open %s\n", "./backups/.log");
 		exit(1);
 	}
 
-	log_wrapper(log, "Starting back up: ", av[2]);
+	log_wrapper(file_fd_log, "Starting back up: ", av[2]);
 
-	if ((param = fopen(av[2], "r")) == 0) {
+	if ((file_fd_src = fopen(av[2], "r")) == 0) {
 		printf("ERROR: Failed to open %s\n", av[2]);
 		exit(1);
 	}
 
-	strcpy(a, "./backups/");
+	strcpy(backup_name, "./backups/");
 
 	x = 0xffffffffffffffff;
 
-	strncat(a, av[2], strlen(a) - 99);
+	strncat(backup_name, av[2], strlen(backup_name) - 99);
 
-	if ((fd = open(a, 0)) != 0) {
+	if ((fd_backup = open(backup_name, 0)) != 0) {
 		printf("ERROR: Failed to open %s%s\n", "./backups/", av[2]);
 		exit(1);
 	}
 
-
-	while ((b = fgetc(param)) != 0xff) {
-		write(fd, &b, 1);
+	while ((fd_dest = fgetc(file_fd_src)) != 0xff) {
+		write(fd_backup, &fd_dest, 1);
 	}
 	
-	log_wrapper(log, "Finished back up ", av[2]);
+	log_wrapper(file_fd_log, "Finished back up ", av[2]);
 
-	fclose(param);
-	close(fd);
-
+	fclose(file_fd_src);
+	close(fd_backup);
 	return 0;
 }

@@ -90,26 +90,21 @@ int				main(int argc, char **argv, char **envp)
 		memset(*ep, 0, strlen(*ep));
 		ep++;
 	}
-	puts('-' <repeats 52 times>, "\n  Welcome to wil's crappy number storage service!   \n",
-			'-' <repeats 52 times>, "\n Commands:", ' ' <repeats 31 times>...);
+	puts("--------------\n  Welcome to wil's crappy number storage service!   \n"
+			"--------------\n Commands:               ");
 	while (1)
 	{
 		printf("Input command: ");
 		v = 1;
-		fgets(buff, 20,.stdin);
+		fgets(buff, 20, stdin);
 		buff[strlen(buff) - 1] = 0; // this does not make much sense
+
 		if (strncmp(buff, "store", 5))
-		{
 			store_number(bbuff);
-		}
 		else if (strncmp(buff, "read", 4))
-		{
 			read_number(bbuff);
-		}
 		else if (strncmp(buff, "quit", 4))
-		{
 			break;
-		}
 	}
 	return (0);
 }
