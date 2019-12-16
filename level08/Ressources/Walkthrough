@@ -1,0 +1,14 @@
+level08 takes a file path and makes a copy of that file into a './backup' directory
+which, in the home directoy is owned by level09.
+
+The path to level09/.pass is /home/users/level09/.pass which is a problem because the program will
+attempt to backup in ./backups/home/users/level09/.pass , and we can't make the directories to makeup for
+that since ./backups is owned by level09
+
+Here we have two options :
+1/ We can create a bogus ./backups directory (in /tmp for instance), create the required subdirectories
+and execute with that place as a cwd
+
+2/ We can make a symbolic link, let's call him 'link', and point it to /home/users/level09/.pass
+This way, the program will create a file named 'link' (with no subdirectories required)
+while still opening /home/users/level09/.pass
